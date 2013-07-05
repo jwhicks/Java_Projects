@@ -1,43 +1,42 @@
 /**
  *
  * @author HicksJ
+ * 
+ * input names and times of a marathon and 
+ * output a sorted array ascending by time
+ * fastest time first. 
  */
 
   
 import java.lang.String;
-import java.util.Arrays;
+import java.util.*;
+import java.io.*;
 
 
-public class Hello {  
+public class Marathon {  
 
-public static void main(String arg[]) {
-    
-    String[] names ={
-        "Elena", "Thomas", "Hamilton", "Suzie", "Phil", "Matt", "Alex",
-        "Emma", "John", "James", "Jane", "Emily", "Daniel", "Neda",
-        "Aaron", "Kate"
-    };
-    
-    int[] origTimes ={
-        341, 273, 278, 329, 445, 402, 388, 275, 243, 334, 412, 393, 299,
-        343, 317, 265
-    };
-    
-    int[] times ={
-        341, 273, 278, 329, 445, 402, 388, 275, 243, 334, 412, 393, 299,
-        343, 317, 265
-    };   
-                        
-         for (int i = 0; i < names.length; i++) {
-           System.out.println("Input: "+ names[i]+ ": " + origTimes[i]);        
+private static final String DATA_FILE_NAME = 
+             "/home/hicksj/NetBeansProjects/Java_Progs/Marathon/src/marathon/RaceData.csv";
+private static String [] runnerNames = new String[18];
+private static int [] runnerTimes = new int[18];
+private static int [] origTimes = new int[18];
+
+public static void main(String arg[]) throws IOException {
+
+         loadRaceData();
+         
+         System.arraycopy(runnerTimes, 0, origTimes, 0, runnerTimes.length); 
+          
+         for (int i = 0; i < runnerNames.length; i++) {
+           System.out.println("Input: "+ runnerNames[i]+ ": " + origTimes[i]);        
          }
            
-         int[] times2 = sortTimes(times);
+         int[] times2 = sortTimes(runnerTimes);
          int[] sortedNames = matchNames(origTimes,times2);
                               
            System.out.println("");           
-         for (int i = 0; i < names.length; i++) {      
-           System.out.println("Final Results: "+ names[sortedNames[i]]+ ": " + times2[i]);
+         for (int i = 0; i < runnerNames.length; i++) {      
+           System.out.println("Final Results: "+ runnerNames[sortedNames[i]]+ ": " + times2[i]);
         }
       
 }//Main
@@ -51,7 +50,7 @@ public static void main(String arg[]) {
        
        int[] sortedTimes = new int[times2.length];
        
-        Arrays.sort(times2);
+        sortArray(times2);
         System.arraycopy(times2, 0, sortedTimes, 0, times2.length);
        
        return sortedTimes;     
@@ -77,6 +76,53 @@ public static void main(String arg[]) {
        }
            
      return newNames;
+     
    }//matchNames
+   
+/*
+*    sort an input array descinding by time
+*    fastest time first
+*/   
+   public static int[] sortArray(int[] inArray){
+
+       int i,j,temp;
+
+       for (i=0; i<= inArray.length-1; i++){
+           for(j=i+1; j<=inArray.length-1; j++){
+               if(inArray[i] > inArray[j]){
+                   temp = inArray[i];
+                   inArray[i] = inArray[j];
+                   inArray[j] = temp;    
+               }
+           }
+       }
+     return inArray;
+     
+   }//sortArray
+  
+  public static void loadRaceData() throws FileNotFoundException, IOException {
+             
+       int i =0;
+       
+       try {
+         File file = new File(DATA_FILE_NAME);
+         Scanner scanner = new Scanner(file);
          
+         while (scanner.hasNext()){
+                StringTokenizer st = new StringTokenizer(scanner.nextLine(),",");
+                    if (st.countTokens() == 2){
+                        runnerNames[i] = st.nextToken();
+                        runnerTimes[i] = Integer.parseInt(st.nextToken());
+                        i++;
+           }
+         }
+         
+         scanner.close();
+         
+       } catch (FileNotFoundException e) {
+                e.printStackTrace();
+       }
+                  
+  } //loadRaceData()
+  
 }//Class

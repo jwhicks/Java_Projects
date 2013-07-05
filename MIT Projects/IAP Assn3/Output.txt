@@ -7,26 +7,30 @@ Input: Phil: 445
 Input: Matt: 402
 Input: Alex: 388
 Input: Emma: 275
-Input: John: 243
-Input: James: 334
+Input: John: 202
+Input: Jame: 334
 Input: Jane: 412
 Input: Emily: 393
 Input: Daniel: 299
 Input: Neda: 343
 Input: Aaron: 317
 Input: Kate: 265
+Input: Jason: 279
+Input: Katy: 365
 
-Final Results: John: 243
+Final Results: John: 202
 Final Results: Kate: 265
 Final Results: Thomas: 273
 Final Results: Emma: 275
 Final Results: Hamilton: 278
+Final Results: Jason: 279
 Final Results: Daniel: 299
 Final Results: Aaron: 317
 Final Results: Suzie: 329
-Final Results: James: 334
+Final Results: Jame: 334
 Final Results: Elena: 341
 Final Results: Neda: 343
+Final Results: Katy: 365
 Final Results: Alex: 388
 Final Results: Emily: 393
 Final Results: Matt: 402
