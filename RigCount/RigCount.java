@@ -1,8 +1,4 @@
-/*
- * Read in and display weekly rig counts from 
- * Baker Hughes Standard Report
- */
- 
+
 package rigcount;
 
 import org.jsoup.Jsoup;
@@ -13,6 +9,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.FontUIResource;
 import java.awt.Font;
+import org.jsoup.select.Elements;
 
 /**
  *
@@ -25,10 +22,12 @@ public class RigCount {
      */
     public static void main(String[] args) {
         String rigCount="";
-        String idString="";
         String totalChange="";
         String weeklyChange="";
         String yearlyChange="";
+    
+        Elements idString = null;
+        
         Document doc;
                 
         javax.swing.UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Dialog", Font.BOLD, 22)));
@@ -36,22 +35,20 @@ public class RigCount {
         try {
           doc = 
           Jsoup.connect("http://gis.bakerhughesdirect.com/Reports/StandardReport.aspx").timeout(0).get();
-          idString = doc.select("span[id=ctl00_ContentPlaceHolder1_rigCountsChg]").text();
+          idString = doc.select("span[id=ctl00_ContentPlaceHolder1_rigCountsChg]");
           
         } catch (IOException e) {
             e.printStackTrace();
-          }//catch
-        
-        rigCount = idString.substring(11, 15);
-        totalChange = idString.substring(31, 39);
-        weeklyChange = idString.substring(43, 49);
-        yearlyChange = idString.substring(71, 102);
-        
-        JOptionPane.showMessageDialog(null,"Rig Count Is: "+rigCount+"\nMovement is: "+totalChange+
-                                      "\nWeekly Change: "+weeklyChange+"\nYearly Change: "+yearlyChange,
-                                      "Baker Hughes Rig Count",JOptionPane.PLAIN_MESSAGE);
-        
-        
+        }//catch
+
+       
+        rigCount = idString.text().substring(11, 14);      
+        totalChange = idString.text().substring(29, 36);
+        weeklyChange = idString.text().substring(38, 43);
+        yearlyChange = idString.text().substring(66, 77);   
+
+        JOptionPane.showMessageDialog(null, idString.text(), "Rig Count", JOptionPane.PLAIN_MESSAGE);
+    
     }//main
     
 }//class
